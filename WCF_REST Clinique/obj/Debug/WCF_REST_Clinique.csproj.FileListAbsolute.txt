@@ -1,0 +1,42 @@
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\WCF_REST Clinique.dll.config
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\WCF_REST Clinique.dll
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\WCF_REST Clinique.pdb
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\Newtonsoft.Json.dll
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\System.Net.Http.Formatting.dll
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\System.Web.Http.dll
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\Newtonsoft.Json.xml
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\System.Net.Http.Formatting.xml
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\bin\System.Web.Http.xml
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CoreCompileInputs.cache
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CopyComplete
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.dll
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.pdb
+C:\Users\Metafora\Documents\Automne 2022\Services d'échange des données\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.AssemblyReference.cache
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\WCF_REST Clinique.dll.config
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\WCF_REST Clinique.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\WCF_REST Clinique.pdb
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\Newtonsoft.Json.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\System.Net.Http.Formatting.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\System.Web.Http.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\Newtonsoft.Json.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\System.Net.Http.Formatting.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\bin\System.Web.Http.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.AssemblyReference.cache
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CoreCompileInputs.cache
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CopyComplete
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Automne 2022\Services d'échange des données\Projet Finale_Service\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.pdb
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\WCF_REST Clinique.dll.config
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\WCF_REST Clinique.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\WCF_REST Clinique.pdb
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\Newtonsoft.Json.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\System.Net.Http.Formatting.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\System.Web.Http.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\Newtonsoft.Json.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\System.Net.Http.Formatting.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\bin\System.Web.Http.xml
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.AssemblyReference.cache
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CoreCompileInputs.cache
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\obj\Debug\WCF_REST_Clinique.csproj.CopyComplete
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.dll
+C:\Users\Nicolas Lazarte\OneDrive - Collège de Rosemont\Bureau\WCF_REST Clinique\obj\Debug\WCF_REST Clinique.pdb

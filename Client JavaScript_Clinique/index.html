@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE-edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="style.css">
+<style>
+	table {
+		border : 2px blue solid;
+		border-collapse : collapse;
+	}
+	th,td {
+		border : 1px solid blue;
+	}
+	th {
+		background-color : darkblue;
+		color : white;
+	}
+</style>
+<script src="config.js">
+//le fichier config.js contient un objet Config ayant 1 attribut : BASE_URI.
+</script>
+<script src="my_ajax.js">
+</script>
+<script>
+var xho;
+function go(path,queryString)
+{
+  var url = Config.BASE_URI;
+	if (path) {
+		url += path;
+	}
+	if (queryString) {
+		url += queryString;
+	}
+  xho = new XMLHttpRequest();
+	xho.onreadystatechange = traiterReponse;
+	try
+	{
+		xho.open("GET",url,true);
+	}
+	catch (e)
+	{
+	  alert(e);
+	}
+	xho.send(null);
+}
+
+function traiterReponse()
+{
+  if (this.readyState == 4) //complÃ©tÃ©
+    if (this.status == 200)  //rÃ©ponse OK
+	{
+		var s = this.responseText;
+		var str = "";
+		var i,j;
+		var element;
+
+		try {
+			var reponse = JSON.parse(s);
+			document.getElementById("reponse").innerHTML = '';
+			document.getElementById("nbResultats").innerHTML = '';
+
+			if (Array.isArray(reponse)) {
+				if (reponse.length>0) {
+					document.getElementById("nbResultats").innerHTML = reponse.length+" r&eacute;sultats";
+					var attributs = Object.keys(reponse[0]);
+					str = "<table><tr>";
+					for (i=0;i<attributs.length;i++) {
+						str += "<th>"+attributs[i]+"</th>";
+					}
+					str += "</tr>";
+					for (i=0;i<reponse.length;i++) {
+						element = reponse[i];
+						str += "<tr>";
+						for (j=0;j<attributs.length;j++) {
+							str += "<td>"+element[attributs[j]]+"</td>";
+							/*
+							en javascript, on peut accÃ©der Ã  l'attribut solde d'un compte cpt par :
+							cpt.solde
+							OU:
+							cpt['solde']
+							*/
+						}
+						str += "</tr>";
+					}
+					str += "</table>";
+					document.getElementById("reponse").innerHTML = "REPONSE : <br />" + str;
+				}
+				else {
+					document.getElementById("nbResultats").innerHTML = reponse.length+" r&eacute;sultats";
+				}
+			}
+			else {
+				document.getElementById("reponse").innerHTML = "REPONSE du SERVICE : "+reponse;
+			}
+		} catch (e) {
+			document.getElementById("reponse").innerHTML = "ERREUR : "+e;
+		}
+	}
+	else
+	{
+	  alert("Probleme : "+xho.status+" - "+xho.statusText);
+	}
+}
+window.onload = function() {
+	document.getElementById("bTous").onclick = function() {
+		ajax(Config.BASE_URI+'/Patients/',traiterReponse);
+	}
+	document.getElementById("bSearch").onclick = function() {
+		var patientId = document.getElementById("id").value;
+		if (patientId=="") {
+			alert("Saisir le ID du patient");
+			return;
+		}
+		ajax(Config.BASE_URI+'/PatientByID?annee='+annee,traiterReponse);
+	}
+	document.getElementById("bSupp").onclick = function() {
+		var supprimerPatient = document.getElementById("id").value;
+		if (supprimerPatient=="") {
+			alert("Saisir le ID du patient a supprimer");
+			return;
+		}
+		ajax(Config.BASE_URI+'/DeletePatient/'+isbnASupprimer,traiterReponse,'DELETE');
+	}
+	document.getElementById("bOk").onclick = function() {
+		if (this.value == 'Ajouter') {
+			var idAjouter = document.getElementById("id").value;
+			if (idAjouter=="") {
+				alert("saisir le ID du patient a ajouter");
+				return;
+			}
+			var data = {
+				nom:document.getElementById('nom').value,
+				prenom:document.getElementById('prenom').value,
+				email:document.getElementById('email').value,
+				ddn:document.getElementById('ddn').value,
+                age:document.getElementById('age').value,
+                sexe:document.getElementById('sexe').value,
+                allergies:document.getElementById('allergies').value,
+                password:document.getElementById('password').value
+			};
+			var contentType = "application/json";
+			ajax(Config.BASE_URI+'/AddPatient',traiterReponse,'POST',JSON.stringify(data),contentType);
+		}
+	}
+}
+</script>
+</head>
+<header>
+	<div class="logo">Clinique Médicale de Rosemont</div>
+    <ui class="menu">
+        <a href="#">Inscription Patients</a>
+        <a href="#">Se connecter</a>
+        <a href="#">Consultation</a>
+        <a href="contact.html">Contact</a>
+    </ui>
+</header>
+<body>
+
+	<!-- accueil -->
+
+	<section class="accueil">
+		<div class="accueil-infos">
+			<h1>Services offerts aux patients</h1>
+			<p>On offre le meilleur soin de santé à nos patients</p>
+			<a href="#">Engager un spécialiste</a>
+		</div>
+	</section>
+
+	<!-- services patients -->
+
+	<section class="services">
+		<h1 class="title">SERVICES MÉDICAUX</h1>
+		<p class="sub-title">Notre clinique vous offre diverses options de soins de santé</p>
+		<div class="liste-services">
+			<div class="options">
+				<h1>Santé familiale</h1>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

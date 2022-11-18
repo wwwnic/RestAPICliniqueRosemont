@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Client JavaScript_Clinique",
+    "\\Service_REST_Clinique",
+    "\\Service_REST_Clinique\\Controllers",
+    "\\Service_REST_Clinique\\Models",
+    "\\WCF_REST Clinique"
+  ],
+  "SelectedNode": "\\Service_REST_Clinique\\packages.config",
+  "PreviewInSolutionExplorer": false
+}

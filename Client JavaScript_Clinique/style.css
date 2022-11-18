@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 5%;
+}
+header.logo {
+    font-size: 25px;
+}
+header .logo span {
+    color:#93d6d0;
+}
+header .menu a{
+    position: relative;
+    margin: 0 10px;
+    text-decoration: 0;
+    color:#999;
+    transition: 0.5s;
+}
+header .menu a::before {
+    position:absolute;
+    top: -2px;
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #93d6d0;
+    transition: 0.5s;
+}
+
+header .menu a:hover::before {
+    width: 100%;
+}
+header .menu a:hover {
+    color:#000;
+}
+
+/* accueil */
+
+.accueil {
+    height: calc(100vh - 55px);
+    background: url(images/clinique.jpg);
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    padding-left: 5%;
+    padding-bottom: 50px;
+}
+.accueil-infos {
+    background-color: burlywood;
+    border-radius: 6px;
+    padding: 50px;
+    animation: anime 2s linear;
+}
+
+/* animation accueil */
+
+@keyframes anime{
+    from{
+        transform: translateX(-450px);
+    }
+}
+
+.accueil-infos h1 {
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.accueil-infos p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}
+.accueil-infos a {
+    text-decoration: 0;
+    border: 2px solid cornflowerblue;
+    border-radius: 6px;
+    padding: 5px 20px;
+    margin-top: 5px;
+    font-weight: 400;
+    text-transform: capitalize;
+    transition: 0.5s;
+}
+.accueil-infos a:hover {
+    background-color: lightgreen;
+    color: #fff;
+    letter-spacing: 1px;
+}
