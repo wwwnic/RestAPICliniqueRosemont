@@ -7,6 +7,8 @@ namespace ServiceCliniqueRosemont.Source
     {
         const string SQL_SELECT_ALL = "SELECT * FROM prescription;";
 
+        const string SQL_SELECT_BY_ID = "SELECT * FROM `prescription` WHERE id = @id";
+
         const string SQL_CREATE = "INSERT INTO `prescription` (`id_medecin`, `id_patient`, `prescription`, `notes`, `references` ) VALUES (@idMed, @idPat, @prescription, @notes, @references);";
 
         const string SQL_UPDATE = "UPDATE `prescription` SET `id_medecin`=@idMed, `id_patient`=@idPat, `prescription`=@prescription, `notes`=@notes, `references`=@references WHERE `prescription`.`id` = @id;";
@@ -53,6 +55,31 @@ namespace ServiceCliniqueRosemont.Source
             return isSucces;
         }
 
+
+
+        public Prescription AvoirUnePrescription(int id)
+        {
+            Connecteur.Connect();
+            var command = Connecteur.connection.CreateCommand();
+            command.CommandText = SQL_SELECT_BY_ID;
+            command.Parameters.AddWithValue("@id", id);
+            var reader = command.ExecuteReader();
+            var pres = new Prescription();
+            if (reader.Read())
+            {
+                pres = new Prescription
+                {
+                    Id = reader.GetInt32("id"),
+                    Id_medecin = reader.GetInt32("id_medecin"),
+                    Id_patient = reader.GetInt32("id_patient"),
+                    Description = reader.GetString("prescription"),
+                    Notes = reader.GetString("notes"),
+                    References = reader.GetString("references")
+                };
+                Connecteur.Disconnect();
+            }
+            return pres;
+        }
 
         public bool ModifierUnePrescription(int idPrescription, int nouvIdMed, int nouvIdPat, string nouvPrescription, string nouvNote, string nouvRef)
         {
