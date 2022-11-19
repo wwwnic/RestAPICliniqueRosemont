@@ -1,5 +1,6 @@
 ﻿using ExamBiblio.Source;
 using ServiceCliniqueRosemont.Model;
+using System.Reflection.PortableExecutable;
 
 namespace ServiceCliniqueRosemont.Source
 {
@@ -8,6 +9,10 @@ namespace ServiceCliniqueRosemont.Source
         const string SQL_SELECT_ALL = "SELECT * FROM prescription;";
 
         const string SQL_SELECT_BY_ID = "SELECT * FROM `prescription` WHERE id = @id";
+
+        const string SQL_SELECT_BY_ID_MEDECIN = "SELECT * FROM `prescription` WHERE id_medecin = @id";
+
+        const string SQL_SELECT_BY_ID_PATIENT = "SELECT * FROM `prescription` WHERE id_patient = @id";
 
         const string SQL_CREATE = "INSERT INTO `prescription` (`id_medecin`, `id_patient`, `prescription`, `notes`, `references` ) VALUES (@idMed, @idPat, @prescription, @notes, @references);";
 
@@ -55,8 +60,57 @@ namespace ServiceCliniqueRosemont.Source
             return isSucces;
         }
 
+        public List<Prescription> AvoirLesPrescriptionsParIdMedecin(int id)
+        {
+            Connecteur.Connect();
+            var command = Connecteur.connection.CreateCommand();
+            command.CommandText = SQL_SELECT_BY_ID_MEDECIN;
+            command.Parameters.AddWithValue("@id", id);
+            var reader = command.ExecuteReader();
+            var listPres = new List<Prescription>();
 
+            while (reader.Read())
+            {
+                var pres = new Prescription
+                {
+                    Id = reader.GetInt32("id"),
+                    Id_medecin = reader.GetInt32("id_medecin"),
+                    Id_patient = reader.GetInt32("id_patient"),
+                    Description = reader.GetString("prescription"),
+                    Notes = reader.GetString("notes"),
+                    References = reader.GetString("references")
+                };
+                listPres.Add(pres);
+            }
+            Connecteur.Disconnect();
+            return listPres;
+        }
 
+        public List<Prescription> AvoirUnePrescriptionParIdPatient(int id)
+        {
+            Connecteur.Connect();
+            var command = Connecteur.connection.CreateCommand();
+            command.CommandText = SQL_SELECT_BY_ID;
+            command.Parameters.AddWithValue("@id", id);
+            var reader = command.ExecuteReader();
+            var listPres = new List<Prescription>();
+
+            while (reader.Read())
+            {
+                var pres = new Prescription
+                {
+                    Id = reader.GetInt32("id"),
+                    Id_medecin = reader.GetInt32("id_medecin"),
+                    Id_patient = reader.GetInt32("id_patient"),
+                    Description = reader.GetString("prescription"),
+                    Notes = reader.GetString("notes"),
+                    References = reader.GetString("references")
+                };
+                listPres.Add(pres);
+            }
+            Connecteur.Disconnect();
+            return listPres;
+        }
         public Prescription AvoirUnePrescription(int id)
         {
             Connecteur.Connect();

@@ -26,6 +26,25 @@ namespace ServiceCliniqueRosemont.Controllers
             return pres;
         }
 
+
+        [HttpGet]
+        [Route("GetByPatientId")]
+        public List<Prescription> GetByPatientId(int id)
+        {
+            var dao = new PrescriptionDAO();
+            var pres = dao.AvoirUnePrescriptionParIdPatient(id);
+            return pres;
+        }
+
+        [HttpGet]
+        [Route("GetByDoctorId")]
+        public List<Prescription> GetByDoctorId(int id)
+        {
+            var dao = new PrescriptionDAO();
+            var pres = dao.AvoirLesPrescriptionsParIdMedecin(id);
+            return pres;
+        }
+
         [HttpPut]
         [Route("Add")]
         public void Add(int idMed, int idPat, string prescription, string note, string reference)
