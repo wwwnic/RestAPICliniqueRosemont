@@ -17,6 +17,15 @@ namespace ServiceCliniqueRosemont.Controllers
             return lstMed;
         }
 
+        [HttpGet]
+        [Route("GetById")]
+        public Patient GetById(int id)
+        {
+            var dao = new PatientDAO();
+            var patient = dao.listerUnPatientParID(id);
+            return patient;
+        }
+
         [HttpPut]
         [Route("Add")]
         public void Add(string nom, string prenom, string password, string email, string ddn, string age, string sexe, string allergies)

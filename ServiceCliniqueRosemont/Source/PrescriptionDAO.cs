@@ -86,11 +86,11 @@ namespace ServiceCliniqueRosemont.Source
             return listPres;
         }
 
-        public List<Prescription> AvoirUnePrescriptionParIdPatient(int id)
+        public List<Prescription> AvoirLesPrescriptionsParIdPatient(int id)
         {
             Connecteur.Connect();
             var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_SELECT_BY_ID;
+            command.CommandText = SQL_SELECT_BY_ID_PATIENT;
             command.Parameters.AddWithValue("@id", id);
             var reader = command.ExecuteReader();
             var listPres = new List<Prescription>();

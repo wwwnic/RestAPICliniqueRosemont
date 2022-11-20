@@ -32,7 +32,7 @@ namespace ServiceCliniqueRosemont.Controllers
         public List<Prescription> GetByPatientId(int id)
         {
             var dao = new PrescriptionDAO();
-            var pres = dao.AvoirUnePrescriptionParIdPatient(id);
+            var pres = dao.AvoirLesPrescriptionsParIdPatient(id);
             return pres;
         }
 

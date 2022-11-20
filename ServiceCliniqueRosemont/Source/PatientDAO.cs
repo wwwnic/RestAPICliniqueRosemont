@@ -12,8 +12,7 @@ namespace ServiceCliniqueRosemont.Source
 
         const string SQL_DELETE = "DELETE FROM `PATIENTS` WHERE (id=?";
 
-        const string SQL_ORDER_BY = "SELECT * FROM PATIENTS" +
-            "ORDER BY id";
+        const string SQL_BY_ID = "SELECT * FROM PATIENTS WHERE `id`=@id";
 
         public List<Patient> AvoirTousLesPatients()
         {
@@ -76,17 +75,32 @@ namespace ServiceCliniqueRosemont.Source
             return isSucces;
         }
 
-        public bool listerUnPatientParID(int id)
+        public Patient listerUnPatientParID(int id)
         {
             Connecteur.Connect();
+            var patient = new Patient();
             var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_ORDER_BY;
-            //int v = command.Parameters.Add(new SqlParameter(id));
-
+            command.CommandText = SQL_BY_ID;
+            command.Parameters.AddWithValue("@id", id);
             var reader = command.ExecuteReader();
-            var isSucces = reader != null;
+
+            if (reader.Read())
+            {
+                patient = new Patient
+                {
+                    Id = reader.GetInt32("id"),
+                    Nom = reader.GetString("nom"),
+                    Prenom = reader.GetString("prenom"),
+                    Password = reader.GetString("password"),
+                    Email = reader.GetString("email"),
+                    Ddn = reader.GetString("ddn"),
+                    Age = reader.GetString("age"),
+                    Sexe = reader.GetString("sexe"),
+                    Allergies = reader.GetString("allergies")
+                };
+            }
             Connecteur.Disconnect();
-            return isSucces;
+            return patient;
         }
 
 
