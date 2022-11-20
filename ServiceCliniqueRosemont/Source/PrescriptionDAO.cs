@@ -18,6 +18,8 @@ namespace ServiceCliniqueRosemont.Source
 
         const string SQL_UPDATE = "UPDATE `prescription` SET `id_medecin`=@idMed, `id_patient`=@idPat, `prescription`=@prescription, `notes`=@notes, `references`=@references WHERE `prescription`.`id` = @id;";
 
+        const string SQL_DELETE = "DELETE FROM `prescription` WHERE (id=?";
+
         public List<Prescription> AvoirLesPrescriptions()
         {
             Connecteur.Connect();
@@ -157,6 +159,22 @@ namespace ServiceCliniqueRosemont.Source
                 command.Parameters.AddWithValue("@prescription", pres.Description);
                 command.Parameters.AddWithValue("@notes", pres.Notes);
                 command.Parameters.AddWithValue("@references", pres.References);
+                var reader = command.ExecuteReader();
+                var isSucces = reader != null;
+                Connecteur.Disconnect();
+                return isSucces;
+            }
+        }
+
+
+        public bool SupprimerUnePrescription(int id)
+        {
+            Connecteur.Connect();
+            using (var command = Connecteur.connection.CreateCommand())
+            {
+                command.CommandText = SQL_DELETE;
+                command.Parameters.Remove(id);
+
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
                 Connecteur.Disconnect();

@@ -9,6 +9,10 @@ namespace ServiceCliniqueRosemont.Source
 
         const string SQL_CREATE = "INSERT INTO `Medecins` (`nom`, `prenom`, `password`, `email`) VALUES (@nom, @prenom, @password, @email);";
 
+        const string SQL_DELETE = "DELETE FROM `Medecins` WHERE (id=?";
+
+        const string SQL_UPDATE = "UPDATE `Medecins` SET `id`=@id, `nom`=@nom, `prenom`=@prenom, `password`=@password, `email`=@email";
+
         public List<Medecin> AvoirTousLesMedecins()
         {
             Connecteur.Connect();
@@ -52,5 +56,40 @@ namespace ServiceCliniqueRosemont.Source
                 return isSucces;
             }
         }
+
+        public bool SupprimerUnMedecin(int id)
+        {
+            Connecteur.Connect();
+            using (var command = Connecteur.connection.CreateCommand())
+            {
+                command.CommandText = SQL_DELETE;
+                command.Parameters.Remove(id);
+
+                var reader = command.ExecuteReader();
+                var isSucces = reader != null;
+                Connecteur.Disconnect();
+                return isSucces;
+            }
+        }
+
+        public bool ModifierUnMedecin(Medecin medecin)
+        {
+            Connecteur.Connect();
+            using (var command = Connecteur.connection.CreateCommand())
+            {
+                command.CommandText = SQL_UPDATE;
+                command.Parameters.AddWithValue("@id", medecin.Id);
+                command.Parameters.AddWithValue("@nom", medecin.Nom);
+                command.Parameters.AddWithValue("@prenom", medecin.Prenom);
+                command.Parameters.AddWithValue("@password", medecin.Password);
+                command.Parameters.AddWithValue("@email", medecin.Email);
+
+                var reader = command.ExecuteReader();
+                var isSucces = reader != null;
+                Connecteur.Disconnect();
+                return isSucces;
+            }
+        }
+
     }
 }

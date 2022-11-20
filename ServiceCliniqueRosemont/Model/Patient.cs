@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.VisualBasic;
+using System.Text.Json.Serialization;
 
 namespace ServiceCliniqueRosemont.Model
 {
@@ -17,7 +18,7 @@ namespace ServiceCliniqueRosemont.Model
 
         public string Ddn { get; set; }
 
-        public string Age { get; set; }
+        public int Age { get; set; }
 
         public string Sexe { get; set; }
 
