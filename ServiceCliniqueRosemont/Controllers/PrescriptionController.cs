@@ -8,12 +8,14 @@ namespace ServiceCliniqueRosemont.Controllers
     [Route("[controller]")]
     public class PrescriptionController : ControllerBase
     {
+        private readonly PrescriptionDAO DAO = new PrescriptionDAO();
+
+
         [HttpGet]
         [Route("GetAll")]
         public List<Prescription> GetAll()
         {
-            var dao = new PrescriptionDAO();
-            var lstPres = dao.AvoirLesPrescriptions();
+            var lstPres = DAO.AvoirLesPrescriptions();
             return lstPres;
         }
 
@@ -21,8 +23,7 @@ namespace ServiceCliniqueRosemont.Controllers
         [Route("GetById")]
         public Prescription GetById(int id)
         {
-            var dao = new PrescriptionDAO();
-            var pres = dao.AvoirUnePrescription(id);
+            var pres = DAO.AvoirUnePrescription(id);
             return pres;
         }
 
@@ -31,8 +32,7 @@ namespace ServiceCliniqueRosemont.Controllers
         [Route("GetByPatientId")]
         public List<Prescription> GetByPatientId(int id)
         {
-            var dao = new PrescriptionDAO();
-            var pres = dao.AvoirLesPrescriptionsParIdPatient(id);
+            var pres = DAO.AvoirLesPrescriptionsParIdPatient(id);
             return pres;
         }
 
@@ -40,25 +40,21 @@ namespace ServiceCliniqueRosemont.Controllers
         [Route("GetByDoctorId")]
         public List<Prescription> GetByDoctorId(int id)
         {
-            var dao = new PrescriptionDAO();
-            var pres = dao.AvoirLesPrescriptionsParIdMedecin(id);
+            var pres = DAO.AvoirLesPrescriptionsParIdMedecin(id);
             return pres;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("Add")]
-        public void Add(int idMed, int idPat, string prescription, string note, string reference)
-        {
-            var dao = new PrescriptionDAO();
-            dao.AjouterUnePrescription(idMed, idPat, prescription, note, reference);
+        public void Add([FromBody] Prescription pres) {
+            DAO.AjouterUnePrescription(pres);
         }
 
         [HttpPatch]
         [Route("Modify")]
-        public void Modify(int id, int idMed, int idPat, string prescription, string note, string reference)
+        public void Modify([FromBody] Prescription pres)
         {
-            var dao = new PrescriptionDAO();
-            dao.ModifierUnePrescription(id, idMed, idPat, prescription, note, reference);
+            DAO.ModifierUnePrescription(pres);
         }
     }
 }

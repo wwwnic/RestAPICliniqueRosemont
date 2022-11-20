@@ -18,91 +18,97 @@ namespace ServiceCliniqueRosemont.Source
         {
             Connecteur.Connect();
             var lstpatients = new List<Patient>();
-            var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_SELECT_ALL;
-            var reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (var command = Connecteur.connection.CreateCommand())
             {
-                var patient = new Patient
+                command.CommandText = SQL_SELECT_ALL;
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    Id = reader.GetInt32("id"),
-                    Nom = reader.GetString("nom"),
-                    Prenom = reader.GetString("prenom"),
-                    Password = reader.GetString("password"),
-                    Email = reader.GetString("email"),
-                    Ddn = reader.GetString("ddn"),
-                    Age = reader.GetString("age"),
-                    Sexe = reader.GetString("sexe"),
-                    Allergies = reader.GetString("allergies")
-                };
-                lstpatients.Add(patient);
+                    var patient = new Patient
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nom = reader.GetString("nom"),
+                        Prenom = reader.GetString("prenom"),
+                        Password = reader.GetString("password"),
+                        Email = reader.GetString("email"),
+                        Ddn = reader.GetString("ddn"),
+                        Age = reader.GetString("age"),
+                        Sexe = reader.GetString("sexe"),
+                        Allergies = reader.GetString("allergies")
+                    };
+                    lstpatients.Add(patient);
+                }
+                Connecteur.Disconnect();
+                return lstpatients;
             }
-            Connecteur.Disconnect();
-            return lstpatients;
         }
 
         public bool AjouterUnPatient(string nom, string prenom, string password, string email, string ddn, string age, string sexe, string allergies)
         {
             Connecteur.Connect();
-            var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_CREATE;
-            command.Parameters.AddWithValue("@nom", nom);
-            command.Parameters.AddWithValue("@prenom", prenom);
-            command.Parameters.AddWithValue("@password", password);
-            command.Parameters.AddWithValue("@email", email);
-            command.Parameters.AddWithValue("@ddn", ddn);
-            command.Parameters.AddWithValue("@age", age);
-            command.Parameters.AddWithValue("@sexe", sexe);
-            command.Parameters.AddWithValue("@allergies", allergies);
+            using (var command = Connecteur.connection.CreateCommand())
+            {
+                command.CommandText = SQL_CREATE;
+                command.Parameters.AddWithValue("@nom", nom);
+                command.Parameters.AddWithValue("@prenom", prenom);
+                command.Parameters.AddWithValue("@password", password);
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@ddn", ddn);
+                command.Parameters.AddWithValue("@age", age);
+                command.Parameters.AddWithValue("@sexe", sexe);
+                command.Parameters.AddWithValue("@allergies", allergies);
 
-            var reader = command.ExecuteReader();
-            var isSucces = reader != null;
-            Connecteur.Disconnect();
-            return isSucces;
+                var reader = command.ExecuteReader();
+                var isSucces = reader != null;
+                Connecteur.Disconnect();
+                return isSucces;
+            }
         }
 
         public bool SupprimerUnPatient(int id)
         {
             Connecteur.Connect();
-            var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_DELETE;
-            command.Parameters.Remove(id);
+            using (var command = Connecteur.connection.CreateCommand())
+            {
+                command.CommandText = SQL_DELETE;
+                command.Parameters.Remove(id);
 
-            var reader = command.ExecuteReader();
-            var isSucces = reader != null;
-            Connecteur.Disconnect();
-            return isSucces;
+                var reader = command.ExecuteReader();
+                var isSucces = reader != null;
+                Connecteur.Disconnect();
+                return isSucces;
+            }
         }
 
         public Patient listerUnPatientParID(int id)
         {
             Connecteur.Connect();
             var patient = new Patient();
-            var command = Connecteur.connection.CreateCommand();
-            command.CommandText = SQL_BY_ID;
-            command.Parameters.AddWithValue("@id", id);
-            var reader = command.ExecuteReader();
-
-            if (reader.Read())
+            using (var command = Connecteur.connection.CreateCommand())
             {
-                patient = new Patient
+                command.CommandText = SQL_BY_ID;
+                command.Parameters.AddWithValue("@id", id);
+                var reader = command.ExecuteReader();
+
+                if (reader.Read())
                 {
-                    Id = reader.GetInt32("id"),
-                    Nom = reader.GetString("nom"),
-                    Prenom = reader.GetString("prenom"),
-                    Password = reader.GetString("password"),
-                    Email = reader.GetString("email"),
-                    Ddn = reader.GetString("ddn"),
-                    Age = reader.GetString("age"),
-                    Sexe = reader.GetString("sexe"),
-                    Allergies = reader.GetString("allergies")
-                };
+                    patient = new Patient
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nom = reader.GetString("nom"),
+                        Prenom = reader.GetString("prenom"),
+                        Password = reader.GetString("password"),
+                        Email = reader.GetString("email"),
+                        Ddn = reader.GetString("ddn"),
+                        Age = reader.GetString("age"),
+                        Sexe = reader.GetString("sexe"),
+                        Allergies = reader.GetString("allergies")
+                    };
+                }
+                Connecteur.Disconnect();
+                return patient;
             }
-            Connecteur.Disconnect();
-            return patient;
         }
-
-
     }
 }
