@@ -56,5 +56,12 @@ namespace ServiceCliniqueRosemont.Controllers
         {
             DAO.ModifierUnePrescription(pres);
         }
+
+        [HttpDelete]
+        [Route("Remove")]
+        public void Remove(int id)
+        {
+            DAO.SupprimerUnePrescription(id);
+        }
     }
 }

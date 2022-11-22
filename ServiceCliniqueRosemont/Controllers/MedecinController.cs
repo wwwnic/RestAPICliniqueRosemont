@@ -11,6 +11,8 @@ namespace ServiceCliniqueRosemont.Controllers
     [Route("[controller]")]
     public class MedecinController : ControllerBase
     {
+        private readonly MedecinDAO DAO = new MedecinDAO();
+
         [HttpGet]
         [Route("GetAll")]
         public List<Medecin> GetAll()
@@ -26,6 +28,21 @@ namespace ServiceCliniqueRosemont.Controllers
         {
             var dao = new MedecinDAO();
             var lstMed = dao.AjouterUnMedecin(prenom, nom, password, email);
+        }
+
+        [HttpDelete]
+        [Route("Remove")]
+        public void Remove(int id)
+        {
+            var dao = new MedecinDAO();
+            var lstMed = dao.SupprimerUnMedecin(id);
+        }
+
+        [HttpPatch]
+        [Route("Modify")]
+        public void Modify([FromBody] Medecin medecin)
+        {
+            DAO.ModifierUnMedecin(medecin);
         }
     }
 }
