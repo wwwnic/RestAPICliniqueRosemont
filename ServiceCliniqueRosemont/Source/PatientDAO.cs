@@ -21,10 +21,11 @@ namespace ServiceCliniqueRosemont.Source
 
         public List<Patient> AvoirTousLesPatients()
         {
-            Connecteur.Connect();
-            var lstpatients = new List<Patient>();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                var lstpatients = new List<Patient>();
+                conn.connection.Open();
                 command.CommandText = SQL_SELECT_ALL;
                 var reader = command.ExecuteReader();
 
@@ -44,16 +45,17 @@ namespace ServiceCliniqueRosemont.Source
                     };
                     lstpatients.Add(patient);
                 }
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return lstpatients;
             }
         }
 
         public bool AjouterUnPatient(string nom, string prenom, string password, string email, DateTime ddn, int age, string sexe, string allergies)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.connection.Open();
                 command.CommandText = SQL_CREATE;
                 command.Parameters.AddWithValue("@nom", nom);
                 command.Parameters.AddWithValue("@prenom", prenom);
@@ -66,62 +68,72 @@ namespace ServiceCliniqueRosemont.Source
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSucces;
             }
         }
 
         public bool SupprimerUnPatient(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_DELETE;
                 command.Parameters.Remove(id);
-
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSucces;
             }
         }
 
         public Patient listerUnPatientParID(int id)
         {
-            Connecteur.Connect();
-            var patient = new Patient();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            try
             {
-                command.CommandText = SQL_BY_ID;
-                command.Parameters.AddWithValue("@id", id);
-                var reader = command.ExecuteReader();
-
-                if (reader.Read())
+                using (var command = conn.connection.CreateCommand())
                 {
-                    patient = new Patient
+                    command.Connection.Open();
+                    var patient = new Patient();
+                    command.CommandText = SQL_BY_ID;
+                    command.Parameters.AddWithValue("@id", id);
+                    var reader = command.ExecuteReader();
+
+                    if (reader.Read())
                     {
-                        Id = reader.GetInt32("id"),
-                        Nom = reader.GetString("nom"),
-                        Prenom = reader.GetString("prenom"),
-                        Password = reader.GetString("password"),
-                        Email = reader.GetString("email"),
-                        Ddn = reader.GetString("ddn"),
-                        Age = reader.GetInt32("age"),
-                        Sexe = reader.GetString("sexe"),
-                        Allergies = reader.GetString("allergies")
-                    };
+                        patient = new Patient
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nom = reader.GetString("nom"),
+                            Prenom = reader.GetString("prenom"),
+                            Password = reader.GetString("password"),
+                            Email = reader.GetString("email"),
+                            Ddn = reader.GetString("ddn"),
+                            Age = reader.GetInt32("age"),
+                            Sexe = reader.GetString("sexe"),
+                            Allergies = reader.GetString("allergies")
+                        };
+                    }
+                    command.Connection.Close();
+                    return patient;
                 }
-                Connecteur.Disconnect();
-                return patient;
+            } finally
+            {
+                conn.Disconnect();
             }
         }
 
         public Patient listerUnPatientParNom(string nom)
         {
-            Connecteur.Connect();
+            var conn = new Connecteur();
+
             var patient = new Patient();
-            using (var command = Connecteur.connection.CreateCommand())
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_BY_NOM;
                 command.Parameters.AddWithValue("@nom", nom);
                 var reader = command.ExecuteReader();
@@ -141,16 +153,17 @@ namespace ServiceCliniqueRosemont.Source
                         Allergies = reader.GetString("allergies")
                     };
                 }
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return patient;
             }
         }
 
         public bool ModifierUnPatient(Patient patient)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_UPDATE;
                 command.Parameters.AddWithValue("@id", patient.Id);
                 command.Parameters.AddWithValue("@nom", patient.Nom);
@@ -164,7 +177,7 @@ namespace ServiceCliniqueRosemont.Source
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSucces;
             }
         }

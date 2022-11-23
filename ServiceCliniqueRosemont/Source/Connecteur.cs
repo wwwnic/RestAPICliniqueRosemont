@@ -13,26 +13,16 @@ namespace ExamBiblio.Source
             Database = "clinique"
         };
 
-        public static MySqlConnection connection = new MySqlConnection(builder.ConnectionString);
+        public MySqlConnection connection { get; private set; } = new MySqlConnection(builder.ConnectionString);
 
-        public static void Connect()
+        public void Connect()
         {
-            {
-                if (connection.State.Equals(ConnectionState.Closed))
-                {
-                    connection.Open();
-                }
-            }
+        connection.Open();
         }
 
-        public static void Disconnect()
+        public void Disconnect()
         {
-            {
-                if (connection.State.Equals(ConnectionState.Open))
-                {
-                    connection.Close();
-                }
-            }
+        connection.Close();
         }
     }
 }

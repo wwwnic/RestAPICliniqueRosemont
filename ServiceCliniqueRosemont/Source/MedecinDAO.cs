@@ -15,68 +15,87 @@ namespace ServiceCliniqueRosemont.Source
 
         public List<Medecin> AvoirTousLesMedecins()
         {
-            Connecteur.Connect();
-            var lstMed = new List<Medecin>();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            try
             {
-                command.CommandText = SQL_SELECT_ALL;
-                var reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (var command = conn.connection.CreateCommand())
                 {
-                    var med = new Medecin
+                    conn.connection.Open();
+                    var lstMed = new List<Medecin>();
+                    command.CommandText = SQL_SELECT_ALL;
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        Id = reader.GetInt32("id"),
-                        Nom = reader.GetString("nom"),
-                        Prenom = reader.GetString("prenom"),
-                        Password = reader.GetString("password"),
-                        Email = reader.GetString("email")
-                    };
-                    lstMed.Add(med);
+                        var med = new Medecin
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nom = reader.GetString("nom"),
+                            Prenom = reader.GetString("prenom"),
+                            Password = reader.GetString("password"),
+                            Email = reader.GetString("email")
+                        };
+                        lstMed.Add(med);
+                    }
+                    conn.connection.Close();
+                    return lstMed;
                 }
-                Connecteur.Disconnect();
-                return lstMed;
             }
+            finally
+            {
+                conn.connection.Close();
+            }
+
         }
 
         public bool AjouterUnMedecin(string nom, string prenom, string password, string email)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            try
             {
-                command.CommandText = SQL_CREATE;
-                command.Parameters.AddWithValue("@nom", nom);
-                command.Parameters.AddWithValue("@prenom", prenom);
-                command.Parameters.AddWithValue("@password", password);
-                command.Parameters.AddWithValue("@email", email);
+                using (var command = conn.connection.CreateCommand())
+                {
+                    conn.connection.Open();
+                    command.CommandText = SQL_CREATE;
+                    command.Parameters.AddWithValue("@nom", nom);
+                    command.Parameters.AddWithValue("@prenom", prenom);
+                    command.Parameters.AddWithValue("@password", password);
+                    command.Parameters.AddWithValue("@email", email);
 
-                var reader = command.ExecuteReader();
-                var isSucces = reader != null;
-                Connecteur.Disconnect();
-                return isSucces;
+                    var reader = command.ExecuteReader();
+                    var isSucces = reader != null;
+                    conn.Disconnect();
+                    return isSucces;
+                }
+            }
+            finally
+            {
+                conn.connection.Close();
             }
         }
 
         public bool SupprimerUnMedecin(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.connection.Open();
                 command.CommandText = SQL_DELETE;
                 command.Parameters.Remove(id);
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.connection.Close();
                 return isSucces;
             }
         }
 
         public bool ModifierUnMedecin(Medecin medecin)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.connection.Open();
                 command.CommandText = SQL_UPDATE;
                 command.Parameters.AddWithValue("@id", medecin.Id);
                 command.Parameters.AddWithValue("@nom", medecin.Nom);
@@ -86,7 +105,7 @@ namespace ServiceCliniqueRosemont.Source
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.connection.Close();
                 return isSucces;
             }
         }

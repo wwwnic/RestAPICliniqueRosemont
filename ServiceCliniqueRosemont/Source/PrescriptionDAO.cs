@@ -22,12 +22,14 @@ namespace ServiceCliniqueRosemont.Source
 
         public List<Prescription> AvoirLesPrescriptions()
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+
+            using (var command = conn.connection.CreateCommand())
             {
+
+                conn.Connect();
                 command.CommandText = SQL_SELECT_ALL;
                 var reader = command.ExecuteReader();
-
                 var lstPres = new List<Prescription>();
                 while (reader.Read())
                 {
@@ -43,15 +45,15 @@ namespace ServiceCliniqueRosemont.Source
                     };
                     lstPres.Add(pres);
                 }
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return lstPres;
             }
         }
 
         public bool AjouterUnePrescription(Prescription pres)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
                 command.CommandText = SQL_CREATE;
                 command.Parameters.AddWithValue("@idMed", pres.Id_medecin);
@@ -61,16 +63,17 @@ namespace ServiceCliniqueRosemont.Source
                 command.Parameters.AddWithValue("@references", pres.References);
                 var reader = command.ExecuteReader();
                 var isSuccess = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSuccess;
             }
         }
 
         public List<Prescription> AvoirLesPrescriptionsParIdMedecin(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.connection.Open();
                 command.CommandText = SQL_SELECT_BY_ID_MEDECIN;
                 command.Parameters.AddWithValue("@id", id);
                 var reader = command.ExecuteReader();
@@ -89,42 +92,53 @@ namespace ServiceCliniqueRosemont.Source
                     };
                     listPres.Add(pres);
                 }
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return listPres;
             }
         }
 
         public List<Prescription> AvoirLesPrescriptionsParIdPatient(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            try
             {
-                command.CommandText = SQL_SELECT_BY_ID_PATIENT;
-                command.Parameters.AddWithValue("@id", id);
-                var reader = command.ExecuteReader();
-                var listPres = new List<Prescription>();
-
-                while (reader.Read())
+                using (var command = conn.connection.CreateCommand())
                 {
-                    var pres = new Prescription
+                    command.Connection.Open();
+                    command.CommandText = SQL_SELECT_BY_ID_PATIENT;
+                    command.Parameters.AddWithValue("@id", id); 
+                    var reader = command.ExecuteReader();
+                    var listPres = new List<Prescription>();
+
+                    while (reader.Read())
                     {
-                        Id = reader.GetInt32("id"),
-                        Id_medecin = reader.GetInt32("id_medecin"),
-                        Id_patient = reader.GetInt32("id_patient"),
-                        Description = reader.GetString("prescription"),
-                        Notes = reader.GetString("notes"),
-                        References = reader.GetString("references")
-                    };
-                    listPres.Add(pres);
+                        var pres = new Prescription
+                        {
+                            Id = reader.GetInt32("id"),
+                            Id_medecin = reader.GetInt32("id_medecin"),
+                            Id_patient = reader.GetInt32("id_patient"),
+                            Description = reader.GetString("prescription"),
+                            Notes = reader.GetString("notes"),
+                            References = reader.GetString("references")
+                        };
+                        listPres.Add(pres);
+                    }
+                    command.Connection.Close();
+                    return listPres;
                 }
-                Connecteur.Disconnect();
-                return listPres;
+            }
+            finally
+            {
+                conn.connection.Close();
             }
         }
         public Prescription AvoirUnePrescription(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+
+            var conn = new Connecteur();
+
+            conn.Connect();
+            using (var command = conn.connection.CreateCommand())
             {
                 command.CommandText = SQL_SELECT_BY_ID;
                 command.Parameters.AddWithValue("@id", id);
@@ -141,7 +155,7 @@ namespace ServiceCliniqueRosemont.Source
                         Notes = reader.GetString("notes"),
                         References = reader.GetString("references")
                     };
-                    Connecteur.Disconnect();
+                    conn.Disconnect();
                 }
                 return pres;
             }
@@ -149,9 +163,11 @@ namespace ServiceCliniqueRosemont.Source
 
         public bool ModifierUnePrescription(Prescription pres)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_UPDATE;
                 command.Parameters.AddWithValue("@id", pres.Id);
                 command.Parameters.AddWithValue("@idMed", pres.Id_medecin);
@@ -161,7 +177,7 @@ namespace ServiceCliniqueRosemont.Source
                 command.Parameters.AddWithValue("@references", pres.References);
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSucces;
             }
         }
@@ -169,15 +185,16 @@ namespace ServiceCliniqueRosemont.Source
 
         public bool SupprimerUnePrescription(int id)
         {
-            Connecteur.Connect();
-            using (var command = Connecteur.connection.CreateCommand())
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_DELETE;
                 command.Parameters.Remove(id);
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
-                Connecteur.Disconnect();
+                conn.Disconnect();
                 return isSucces;
             }
         }
