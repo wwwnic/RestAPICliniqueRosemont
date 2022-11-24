@@ -19,6 +19,9 @@ namespace ServiceCliniqueRosemont.Source
 
         const string SQL_UPDATE = "UPDATE `PATIENTS` SET `id`=@id, `nom`=@nom, `prenom`=@prenom, `password`=@password, `email`=@email, `ddn`=@ddn, `age` = @age, `sexe`=@sexe, `allergies`=@allergies";
 
+        const string SQL_SEARCH_BY_NAME = "SELECT * FROM PATIENTS WHERE `nom` LIKE @nom OR `prenom` LIKE @nom";
+
+
         public List<Patient> AvoirTousLesPatients()
         {
             var conn = new Connecteur();
@@ -120,7 +123,8 @@ namespace ServiceCliniqueRosemont.Source
                     command.Connection.Close();
                     return patient;
                 }
-            } finally
+            }
+            finally
             {
                 conn.Disconnect();
             }
@@ -182,6 +186,37 @@ namespace ServiceCliniqueRosemont.Source
             }
         }
 
+        public List<Patient> RechercherDesPatientsParNom(string nom)
+        {
+            var conn = new Connecteur();
+            using (var command = conn.connection.CreateCommand())
+            {
+                var lstpatients = new List<Patient>();
+                conn.connection.Open();
+                command.CommandText = SQL_SEARCH_BY_NAME;
+                command.Parameters.AddWithValue("@nom", nom);
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var patient = new Patient
+                    {
+                        Id = reader.GetInt32("id"),
+                        Nom = reader.GetString("nom"),
+                        Prenom = reader.GetString("prenom"),
+                        Password = reader.GetString("password"),
+                        Email = reader.GetString("email"),
+                        Ddn = reader.GetString("ddn"),
+                        Age = reader.GetInt32("age"),
+                        Sexe = reader.GetString("sexe"),
+                        Allergies = reader.GetString("allergies")
+                    };
+                    lstpatients.Add(patient);
+                }
+                conn.Disconnect();
+                return lstpatients;
+            }
+        }
 
     }
 }

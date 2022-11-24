@@ -60,5 +60,26 @@ namespace ServiceCliniqueRosemont.Controllers
         {
             DAO.ModifierUnPatient(patient);
         }
+
+        [HttpGet]
+        [Route("Search")]
+        public List<Patient> SEARCH(String searchString)
+        {
+            int entier;
+            var RecherchEstUnEntier = int.TryParse(searchString, out entier);
+
+            if (RecherchEstUnEntier)
+            {
+                var lstPatient = new List<Patient>();
+                var patient = DAO.listerUnPatientParID(entier);
+                lstPatient.Add(patient);
+                return lstPatient;
+            }
+            else
+            {
+                return DAO.RechercherDesPatientsParNom(searchString);
+
+            }
+        }
     }
 }
