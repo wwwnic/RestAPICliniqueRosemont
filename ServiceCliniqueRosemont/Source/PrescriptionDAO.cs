@@ -55,6 +55,7 @@ namespace ServiceCliniqueRosemont.Source
             var conn = new Connecteur();
             using (var command = conn.connection.CreateCommand())
             {
+                conn.Connect();
                 command.CommandText = SQL_CREATE;
                 command.Parameters.AddWithValue("@idMed", pres.Id_medecin);
                 command.Parameters.AddWithValue("@idPat", pres.Id_patient);
@@ -106,7 +107,7 @@ namespace ServiceCliniqueRosemont.Source
                 {
                     command.Connection.Open();
                     command.CommandText = SQL_SELECT_BY_ID_PATIENT;
-                    command.Parameters.AddWithValue("@id", id); 
+                    command.Parameters.AddWithValue("@id", id);
                     var reader = command.ExecuteReader();
                     var listPres = new List<Prescription>();
 
