@@ -17,25 +17,21 @@ namespace ServiceCliniqueRosemont.Controllers
         [Route("GetAll")]
         public List<Medecin> GetAll()
         {
-            var dao = new MedecinDAO();
-            var lstMed = dao.AvoirTousLesMedecins();
-            return lstMed;
+            return DAO.AvoirTousLesMedecins();
         }
 
         [HttpPut]
         [Route("Add")]
         public void Add(string nom, string prenom, string password, string email)
         {
-            var dao = new MedecinDAO();
-            var lstMed = dao.AjouterUnMedecin(prenom, nom, password, email);
+            DAO.AjouterUnMedecin(prenom, nom, password, email);
         }
 
         [HttpDelete]
         [Route("Remove")]
         public void Remove(int id)
         {
-            var dao = new MedecinDAO();
-            var lstMed = dao.SupprimerUnMedecin(id);
+           DAO.SupprimerUnMedecin(id);
         }
 
         [HttpPatch]

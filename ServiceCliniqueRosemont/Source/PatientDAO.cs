@@ -53,21 +53,21 @@ namespace ServiceCliniqueRosemont.Source
             }
         }
 
-        public bool AjouterUnPatient(string nom, string prenom, string password, string email, DateTime ddn, int age, string sexe, string allergies)
+        public bool AjouterUnPatient(Patient pat)
         {
             var conn = new Connecteur();
             using (var command = conn.connection.CreateCommand())
             {
                 conn.connection.Open();
                 command.CommandText = SQL_CREATE;
-                command.Parameters.AddWithValue("@nom", nom);
-                command.Parameters.AddWithValue("@prenom", prenom);
-                command.Parameters.AddWithValue("@password", password);
-                command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@ddn", ddn);
-                command.Parameters.AddWithValue("@age", age);
-                command.Parameters.AddWithValue("@sexe", sexe);
-                command.Parameters.AddWithValue("@allergies", allergies);
+                command.Parameters.AddWithValue("@nom", pat.Nom);
+                command.Parameters.AddWithValue("@prenom", pat.Prenom);
+                command.Parameters.AddWithValue("@password", pat.Password);
+                command.Parameters.AddWithValue("@email", pat.Email);
+                command.Parameters.AddWithValue("@ddn", pat.Ddn);
+                command.Parameters.AddWithValue("@age", pat.Age);
+                command.Parameters.AddWithValue("@sexe", pat.Sexe);
+                command.Parameters.AddWithValue("@allergies", pat.Allergies);
 
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;

@@ -12,58 +12,31 @@ namespace ServiceCliniqueRosemont.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public List<Patient> GetAll()
-        {
-            var dao = new PatientDAO();
-            var lstMed = dao.AvoirTousLesPatients();
-            return lstMed;
-        }
+        public List<Patient> GetAll() => DAO.AvoirTousLesPatients();
 
         [HttpGet]
         [Route("GetById")]
-        public Patient GetById(int id)
-        {
-            var dao = new PatientDAO();
-            var patient = dao.listerUnPatientParID(id);
-            return patient;
-        }
+        public Patient GetById(int id) => DAO.listerUnPatientParID(id);
 
         [HttpGet]
         [Route("GetByNom")]
-        public Patient GetByNom(String nom)
-        {
-            var dao = new PatientDAO();
-            var patient = dao.listerUnPatientParNom(nom);
-            return patient;
-        }
-
+        public Patient GetByNom(String nom) => DAO.listerUnPatientParNom(nom);
 
         [HttpPut]
         [Route("Add")]
-        public void Add(string nom, string prenom, string password, string email, DateTime ddn, int age, string sexe, string allergies)
-        {
-            var dao = new PatientDAO();
-            var lstPatient = dao.AjouterUnPatient(prenom, nom, password, email, ddn, age, sexe, allergies);
-        }
+        public void Add([FromBody] Patient patient) => DAO.AjouterUnPatient(patient);
 
         [HttpDelete]
         [Route("Remove")]
-        public void Remove(int id)
-        {
-            var dao = new PatientDAO();
-            var lstPatient = dao.SupprimerUnPatient(id);
-        }
+        public void Remove(int id) => DAO.SupprimerUnPatient(id);
 
         [HttpPatch]
         [Route("Modify")]
-        public void Modify([FromBody] Patient patient)
-        {
-            DAO.ModifierUnPatient(patient);
-        }
+        public void Modify([FromBody] Patient patient) => DAO.ModifierUnPatient(patient);
 
         [HttpGet]
         [Route("Search")]
-        public List<Patient> SEARCH(String searchString)
+        public List<Patient> Search(String searchString)
         {
             int entier;
             var RecherchEstUnEntier = int.TryParse(searchString, out entier);
