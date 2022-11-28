@@ -19,7 +19,7 @@ namespace ServiceCliniqueRosemont.Source
 
         const string SQL_UPDATE = "UPDATE `PATIENTS` SET `id`=@id, `nom`=@nom, `prenom`=@prenom, `password`=@password, `email`=@email, `ddn`=@ddn, `age` = @age, `sexe`=@sexe, `allergies`=@allergies";
 
-        const string SQL_UPDATE_INFO = "UPDATE `PATIENTS` SET `ddn`=@ddn, `age` = @age, `sexe`=@sexe, `allergies`=@allergies WHERE `id`=@id";
+        const string SQL_UPDATE_INFO = "UPDATE `PATIENTS` SET `ddn`=@ddn, `sexe`=@sexe, `allergies`=@allergies WHERE `id`=@id";
 
         const string SQL_SEARCH_BY_NAME = "SELECT * FROM PATIENTS WHERE `nom` LIKE @nom OR `prenom` LIKE @nom";
 
@@ -197,7 +197,6 @@ namespace ServiceCliniqueRosemont.Source
                 command.CommandText = SQL_UPDATE_INFO;
                 command.Parameters.AddWithValue("@id", patient.Id);
                 command.Parameters.AddWithValue("@ddn", patient.Ddn);
-                command.Parameters.AddWithValue("@age", patient.Age);
                 command.Parameters.AddWithValue("@sexe", patient.Sexe);
                 command.Parameters.AddWithValue("@allergies", patient.Allergies);
 
