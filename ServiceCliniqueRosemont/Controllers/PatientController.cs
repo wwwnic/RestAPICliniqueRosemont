@@ -34,6 +34,11 @@ namespace ServiceCliniqueRosemont.Controllers
         [Route("Modify")]
         public void Modify([FromBody] Patient patient) => DAO.ModifierUnPatient(patient);
 
+        [HttpPatch]
+        [Route("ModifyMedicalInfo")]
+        public void ModifyMedicalInfo([FromBody] Patient patient) => DAO.ModifierInfoMedicalPatient(patient);
+
+
         [HttpGet]
         [Route("Search")]
         public List<Patient> Search(String searchString)
