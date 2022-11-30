@@ -7,6 +7,8 @@ namespace ServiceCliniqueRosemont.Source
     {
         const string SQL_SELECT_ALL = "SELECT * FROM Medecins;";
 
+        const string SQL_BY_ID = "SELECT * FROM Medecins WHERE `id` = @id;";
+
         const string SQL_CREATE = "INSERT INTO `Medecins` (`nom`, `prenom`, `password`, `email`) VALUES (@nom, @prenom, @password, @email);";
 
         const string SQL_DELETE = "DELETE FROM `Medecins` WHERE (id=?";
@@ -110,5 +112,38 @@ namespace ServiceCliniqueRosemont.Source
             }
         }
 
+        public Medecin AvoirUnMedecinParId(int id)
+        {
+            var conn = new Connecteur();
+            try
+            {
+                using (var command = conn.connection.CreateCommand())
+                {
+                    command.Connection.Open();
+                    var medecin = new Medecin();
+                    command.CommandText = SQL_BY_ID;
+                    command.Parameters.AddWithValue("@id", id);
+                    var reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        medecin = new Medecin
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nom = reader.GetString("nom"),
+                            Prenom = reader.GetString("prenom"),
+                            Password = reader.GetString("password"),
+                            Email = reader.GetString("email")
+                        };
+                    }
+                    command.Connection.Close();
+                    return medecin;
+                }
+            }
+            finally
+            {
+                conn.Disconnect();
+            }
+        }
     }
 }
