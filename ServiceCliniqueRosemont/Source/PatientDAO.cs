@@ -86,7 +86,10 @@ namespace ServiceCliniqueRosemont.Source
             {
                 conn.Connect();
                 command.CommandText = SQL_DELETE;
-                command.Parameters.Remove(id);
+                if(id != null)
+                {
+                    command.Parameters.Remove(id);
+                }
                 var reader = command.ExecuteReader();
                 var isSucces = reader != null;
                 conn.Disconnect();

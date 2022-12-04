@@ -11,7 +11,7 @@ namespace ServiceCliniqueRosemont.Model
 
         public string Prenom { get; set; }
 
-        [JsonIgnore]
+       
         public string Password { get; set; }
 
         public string Email { get; set; }

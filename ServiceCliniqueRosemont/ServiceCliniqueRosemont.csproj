@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>http:localhost:7002</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace ExamBiblio.Source
         {
             Server = "127.0.0.1",
             UserID = "root",
-            Password = "",
+            Password = "root",
             Database = "clinique"
         };
 
