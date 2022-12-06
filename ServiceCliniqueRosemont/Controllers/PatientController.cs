@@ -5,43 +5,38 @@ using ServiceCliniqueRosemont.Source;
 namespace ServiceCliniqueRosemont.Controllers
 {
 
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class PatientController : ControllerBase
     {
         private readonly PatientDAO DAO = new PatientDAO();
 
         [HttpGet]
-        [Route("GetAll")]
         public List<Patient> GetAll() => DAO.AvoirTousLesPatients();
 
-        [HttpGet]
-        [Route("GetById")]
+        [HttpGet("id/{id}")]
         public Patient GetById(int id) => DAO.listerUnPatientParID(id);
 
-        [HttpGet]
-        [Route("GetByNom")]
-        public Patient GetByNom(String nom) => DAO.listerUnPatientParNom(nom);
+        [HttpGet("name/{nom}")]
+        public Patient GetByName(String nom) => DAO.listerUnPatientParNom(nom);
 
-        [HttpPut]
-        [Route("Add")]
-        public void Add([FromBody] Patient patient) => DAO.AjouterUnPatient(patient);
+        [HttpPost]
+        public void PostAdd([FromBody] Patient patient) => DAO.AjouterUnPatient(patient);
 
         [HttpDelete]
-        [Route("Remove")]
-        public void Remove(int id) => DAO.SupprimerUnPatient(id);
+        public void DeleteRemove(int id) => DAO.SupprimerUnPatient(id);
 
-        [HttpPatch]
-        [Route("Modify")]
-        public void Modify([FromBody] Patient patient) => DAO.ModifierUnPatient(patient);
+        [HttpPut]
+        public void PutModify([FromBody] Patient patient) => DAO.ModifierUnPatient(patient);
 
-        [HttpPatch]
-        [Route("ModifyMedicalInfo")]
-        public void ModifyMedicalInfo([FromBody] Patient patient) => DAO.ModifierInfoMedicalPatient(patient);
+        [HttpPut]
+        [Route("MedicalInfo")]
+        public void PutModifyMedicalInfo([FromBody] Patient patient) => DAO.ModifierInfoMedicalPatient(patient);
 
 
         [HttpGet]
         [Route("Search")]
-        public List<Patient> Search(String searchString)
+        public List<Patient> GetSearch(String searchString)
         {
             int entier;
             var RecherchEstUnEntier = int.TryParse(searchString, out entier);

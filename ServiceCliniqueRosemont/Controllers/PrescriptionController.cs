@@ -5,14 +5,14 @@ using ServiceCliniqueRosemont.Source;
 namespace ServiceCliniqueRosemont.Controllers
 {
 
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class PrescriptionController : ControllerBase
     {
         private readonly PrescriptionDAO DAO = new PrescriptionDAO();
 
 
         [HttpGet]
-        [Route("GetAll")]
         public List<Prescription> GetAll()
         {
             var lstPres = DAO.AvoirLesPrescriptions();
@@ -20,7 +20,7 @@ namespace ServiceCliniqueRosemont.Controllers
         }
 
         [HttpGet]
-        [Route("GetById")]
+        [Route("{id}")]
         public Prescription GetById(int id)
         {
             var pres = DAO.AvoirUnePrescription(id);
@@ -29,7 +29,7 @@ namespace ServiceCliniqueRosemont.Controllers
 
 
         [HttpGet]
-        [Route("GetByPatientId")]
+        [Route("ByPatientId/{id}")]
         public List<Prescription> GetByPatientId(int id)
         {
             var pres = DAO.AvoirLesPrescriptionsParIdPatient(id);
@@ -37,7 +37,7 @@ namespace ServiceCliniqueRosemont.Controllers
         }
 
         [HttpGet]
-        [Route("GetByDoctorId")]
+        [Route("ByDoctorId/{id}")]
         public List<Prescription> GetByDoctorId(int id)
         {
             var pres = DAO.AvoirLesPrescriptionsParIdMedecin(id);
@@ -45,21 +45,19 @@ namespace ServiceCliniqueRosemont.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
-        public void Add([FromBody] Prescription pres) {
+        public void PostAdd([FromBody] Prescription pres)
+        {
             DAO.AjouterUnePrescription(pres);
         }
 
-        [HttpPatch]
-        [Route("Modify")]
-        public void Modify([FromBody] Prescription pres)
+        [HttpPut]
+        public void PutModify([FromBody] Prescription pres)
         {
             DAO.ModifierUnePrescription(pres);
         }
 
         [HttpDelete]
-        [Route("Remove")]
-        public void Remove(int id)
+        public void DeleteRemove(int id)
         {
             DAO.SupprimerUnePrescription(id);
         }

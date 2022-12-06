@@ -4,6 +4,9 @@ using ServiceCliniqueRosemont.Source;
 
 namespace ServiceCliniqueRosemont.Controllers
 {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthentificationController : Controller
     {
 
@@ -13,8 +16,8 @@ namespace ServiceCliniqueRosemont.Controllers
 
 
         [HttpPost]
-        [Route("Patient/Login")]
-        public bool Login([FromBody] Utilisateur utilisateurPotentiel)
+        [Route("Patient")]
+        public bool PostLogin([FromBody] Utilisateur utilisateurPotentiel)
         {
             var patient = PatDAO.listerUnPatientParID(utilisateurPotentiel.Id);
             var estMdpValide = patient.Password == utilisateurPotentiel.Password;
@@ -23,8 +26,8 @@ namespace ServiceCliniqueRosemont.Controllers
 
 
         [HttpPost]
-        [Route("Medecin/Login")]
-        public bool LoginAppMedecin([FromBody] Utilisateur utilisateurPotentiel)
+        [Route("Medecin")]
+        public bool PostLoginAppMedecin([FromBody] Utilisateur utilisateurPotentiel)
         {
             var medecin = MeDDAO.AvoirUnMedecinParId(utilisateurPotentiel.Id);
             var estMdpValide = medecin.Password == utilisateurPotentiel.Password;

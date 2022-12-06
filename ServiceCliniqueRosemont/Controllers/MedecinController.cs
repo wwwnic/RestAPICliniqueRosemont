@@ -8,35 +8,32 @@ using System.Web.Http.ModelBinding;
 namespace ServiceCliniqueRosemont.Controllers
 {
 
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class MedecinController : ControllerBase
     {
         private readonly MedecinDAO DAO = new MedecinDAO();
 
         [HttpGet]
-        [Route("GetAll")]
         public List<Medecin> GetAll()
         {
             return DAO.AvoirTousLesMedecins();
         }
 
-        [HttpPut]
-        [Route("Add")]
-        public void Add(string nom, string prenom, string password, string email)
+        [HttpPost]
+        public void PostAdd(string nom, string prenom, string password, string email)
         {
             DAO.AjouterUnMedecin(prenom, nom, password, email);
         }
 
         [HttpDelete]
-        [Route("Remove")]
-        public void Remove(int id)
+        public void DeleteRemove(int id)
         {
-           DAO.SupprimerUnMedecin(id);
+            DAO.SupprimerUnMedecin(id);
         }
 
-        [HttpPatch]
-        [Route("Modify")]
-        public void Modify([FromBody] Medecin medecin)
+        [HttpPut]
+        public void PutModify([FromBody] Medecin medecin)
         {
             DAO.ModifierUnMedecin(medecin);
         }
