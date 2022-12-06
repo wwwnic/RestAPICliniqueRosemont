@@ -50,7 +50,7 @@ namespace ServiceCliniqueRosemont.Source
 
         }
 
-        public bool AjouterUnMedecin(string nom, string prenom, string password, string email)
+        public bool AjouterUnMedecin(Medecin med)
         {
             var conn = new Connecteur();
             try
@@ -59,10 +59,10 @@ namespace ServiceCliniqueRosemont.Source
                 {
                     conn.connection.Open();
                     command.CommandText = SQL_CREATE;
-                    command.Parameters.AddWithValue("@nom", nom);
-                    command.Parameters.AddWithValue("@prenom", prenom);
-                    command.Parameters.AddWithValue("@password", password);
-                    command.Parameters.AddWithValue("@email", email);
+                    command.Parameters.AddWithValue("@nom", med.Nom);
+                    command.Parameters.AddWithValue("@prenom", med.Prenom);
+                    command.Parameters.AddWithValue("@password", med.Password);
+                    command.Parameters.AddWithValue("@email", med.Email);
 
                     var reader = command.ExecuteReader();
                     var isSucces = reader != null;

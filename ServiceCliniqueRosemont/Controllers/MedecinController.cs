@@ -21,10 +21,8 @@ namespace ServiceCliniqueRosemont.Controllers
         }
 
         [HttpPost]
-        public void PostAdd(string nom, string prenom, string password, string email)
-        {
-            DAO.AjouterUnMedecin(prenom, nom, password, email);
-        }
+        public void Add([FromBody] Medecin medecin) => DAO.AjouterUnMedecin(medecin);
+        
 
         [HttpDelete]
         public void DeleteRemove(int id)
