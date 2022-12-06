@@ -14,11 +14,26 @@ namespace ServiceCliniqueRosemont.Controllers
         [HttpGet]
         public List<Patient> GetAll() => DAO.AvoirTousLesPatients();
 
-        [HttpGet("id/{id}")]
-        public Patient GetById(int id) => DAO.listerUnPatientParID(id);
+        [HttpGet]
+        [Route("{idOrName}")]
+        public List<Patient> GetSearch(String idOrName)
+        {
+            int entier;
+            var RecherchEstUnEntier = int.TryParse(idOrName, out entier);
 
-        [HttpGet("name/{nom}")]
-        public Patient GetByName(String nom) => DAO.listerUnPatientParNom(nom);
+            if (RecherchEstUnEntier)
+            {
+                var lstPatient = new List<Patient>();
+                var patient = DAO.listerUnPatientParID(entier);
+                lstPatient.Add(patient);
+                return lstPatient;
+            }
+            else
+            {
+                return DAO.RechercherDesPatientsParNom(idOrName);
+
+            }
+        }
 
         [HttpPost]
         public void PostAdd([FromBody] Patient patient) => DAO.AjouterUnPatient(patient);
@@ -32,27 +47,5 @@ namespace ServiceCliniqueRosemont.Controllers
         [HttpPut]
         [Route("MedicalInfo")]
         public void PutModifyMedicalInfo([FromBody] Patient patient) => DAO.ModifierInfoMedicalPatient(patient);
-
-
-        [HttpGet]
-        [Route("Search")]
-        public List<Patient> GetSearch(String searchString)
-        {
-            int entier;
-            var RecherchEstUnEntier = int.TryParse(searchString, out entier);
-
-            if (RecherchEstUnEntier)
-            {
-                var lstPatient = new List<Patient>();
-                var patient = DAO.listerUnPatientParID(entier);
-                lstPatient.Add(patient);
-                return lstPatient;
-            }
-            else
-            {
-                return DAO.RechercherDesPatientsParNom(searchString);
-
-            }
-        }
     }
 }
