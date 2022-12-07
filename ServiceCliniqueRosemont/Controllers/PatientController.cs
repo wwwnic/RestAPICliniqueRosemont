@@ -14,6 +14,11 @@ namespace ServiceCliniqueRosemont.Controllers
         [HttpGet]
         public List<Patient> GetAll() => DAO.AvoirTousLesPatients();
 
+
+        [HttpGet("id/{id}")]
+        public Patient GetById(int id) => DAO.listerUnPatientParID(id);
+
+
         [HttpGet]
         [Route("{idOrName}")]
         public List<Patient> GetSearch(String idOrName)
